@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -18,7 +20,8 @@ public class MainActivity extends AppCompatActivity {
         capsules.add(
                 new NespressoCapsule(0,"Fortissio Lungo", R.mipmap.fortissio_lungo));
         capsules.add(
-                new NespressoCapsule(0,"Linizio Lungo", R.mipmap.linizio_lungo));
+                new NespressoCapsule(5,"Linizio Lungo", R.mipmap.linizio_lungo));
+        Collections.sort(capsules);
         listView.setAdapter(new CapsulesAdapter(MainActivity.this, capsules));
     }
 }

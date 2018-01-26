@@ -7,10 +7,9 @@
     android:layout_gravity="center">
 
     <ImageView
-        android:layout_marginTop="10dp"
         android:id="@+id/capsule_image"
         android:layout_width="0dp"
-        android:layout_height="75dp"
+        android:layout_height="59dp"
         android:layout_weight="6"
         android:gravity="center"/>
 

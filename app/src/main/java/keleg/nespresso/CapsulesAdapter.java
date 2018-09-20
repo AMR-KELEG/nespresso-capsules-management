@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -20,25 +21,7 @@ public class CapsulesAdapter extends ArrayAdapter<NespressoCapsule> {
     {
         super(context, 0, capsules);
     }
-
-    public void incrementCapsule(int position)
-    {
-        super.getItem(position).no_of_capsules++;
-        super.notifyDataSetChanged();
-    }
-
-    public void decrementCapsule(int position)
-    {
-        NespressoCapsule capsule = super.getItem(position);
-        if (capsule.no_of_capsules == 0)
-        {
-            Toast.makeText(super.getContext(), capsule.name + ": Empty Inventory!", Toast.LENGTH_SHORT).show();
-            return ;
-        }
-        capsule.no_of_capsules--;
-        super.notifyDataSetChanged();
-    }
-
+    
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
@@ -59,7 +42,17 @@ public class CapsulesAdapter extends ArrayAdapter<NespressoCapsule> {
             @Override
             public void onClick(View view) {
                 Log.d("Amr", capsule.name);
-                incrementCapsule(position);
+                getItem(position).incrementInventory(1);
+                notifyDataSetChanged();
+            }
+        });
+
+        incButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                getItem(position).incrementInventory(10);
+                notifyDataSetChanged();
+                return true;
             }
         });
 
@@ -67,7 +60,14 @@ public class CapsulesAdapter extends ArrayAdapter<NespressoCapsule> {
             @Override
             public void onClick(View view) {
                 Log.d("Amr", capsule.name);
-                decrementCapsule(position);
+                try {
+                    getItem(position).decrementInventory(1);
+                }
+                catch (ArithmeticException e){
+                    Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+
+                notifyDataSetChanged();
             }
         });
         // Populate the data into the template view using the data object

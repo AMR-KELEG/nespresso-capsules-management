@@ -28,4 +28,7 @@ public interface NespressoCapsuleDao {
 
     @Update
     public void update(NespressoCapsule... capsules);
+
+    @Query("UPDATE capsule_table SET intensity = :intensity WHERE name = :name")
+    int update_intensity(String name, int intensity);
 }

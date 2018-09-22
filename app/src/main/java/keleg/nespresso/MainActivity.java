@@ -35,12 +35,18 @@ public class MainActivity extends AppCompatActivity {
                 R.mipmap.vivalto_lungo,R.mipmap.arpeggio_decaffeinato,
                 R.mipmap.volluto_decaffeinato, R.mipmap.vivalto_lungo_decaffeinato,
                 R.mipmap.ciocattino, R.mipmap.vanilio, R.mipmap.caramelito);
+        final List<Integer> cap_intensities = Arrays.asList(10, 5, 12, 11, 10,
+                9, 8, 6, 5, 4,
+                4, 10, 6, 4, 3,
+                9, 8, 4, 4, 9,
+                4, 4, 6, 6, 6);
 
         db = AppDatabase.getDatabase(this);
         List<NespressoCapsule> database_capsules = db.capsuleDao().getAll();
         for (int i=0; i< cap_names.size(); i++){
             String cap_name = cap_names.get(i);
             int cap_image_id = cap_images.get(i);
+            int cap_intensity = cap_intensities.get(i);
             boolean new_cap = true;
             for (int j=0; j< database_capsules.size(); j++){
                 if (database_capsules.get(j).getName().equals(cap_name)){
@@ -50,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
             }
             if (new_cap)
             {
-                db.capsuleDao().insert(new NespressoCapsule(0, cap_name, cap_image_id));
+                db.capsuleDao().insert(new NespressoCapsule(0, cap_name, cap_image_id, cap_intensity));
             }
         }
 

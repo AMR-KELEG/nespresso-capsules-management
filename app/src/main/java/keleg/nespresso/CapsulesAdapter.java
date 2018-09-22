@@ -35,6 +35,7 @@ public class CapsulesAdapter extends ArrayAdapter<NespressoCapsule> {
         ImageView capImage = convertView.findViewById(R.id.capsule_image);
         TextView capName =  convertView.findViewById(R.id.capsule_name);
         TextView capNo = convertView.findViewById(R.id.capsule_count);
+        TextView capIntensity = convertView.findViewById(R.id.capsule_intensity);
         Button incButton = convertView.findViewById(R.id.capsule_inc);
         Button decButton = convertView.findViewById(R.id.capsule_dec);
 
@@ -74,6 +75,7 @@ public class CapsulesAdapter extends ArrayAdapter<NespressoCapsule> {
         capName.setText(capsule.name);
         capImage.setImageResource(capsule.image_id);
         capNo.setText(String.valueOf(capsule.no_of_capsules));
+        capIntensity.setText(String.valueOf(capsule.intensity) + "/13");
 
         // Return the completed view to render on screen
         return convertView;

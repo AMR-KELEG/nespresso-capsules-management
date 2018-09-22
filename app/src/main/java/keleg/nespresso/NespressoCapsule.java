@@ -4,9 +4,20 @@ package keleg.nespresso;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
-import android.widget.Toast;
+import android.support.annotation.Nullable;
+
 @Entity(tableName = "capsule_table")
 public class NespressoCapsule implements Comparable<NespressoCapsule>{
+    @PrimaryKey
+    @NonNull
+    String name;
+    @NonNull
+    int no_of_capsules;
+    @NonNull
+    int image_id;
+    @NonNull
+    int intensity;
+
     @NonNull
     public int getNo_of_capsules() {
         return no_of_capsules;
@@ -22,18 +33,17 @@ public class NespressoCapsule implements Comparable<NespressoCapsule>{
         return image_id;
     }
 
-    @PrimaryKey
     @NonNull
-    String name;
-    @NonNull
-    int no_of_capsules;
-    @NonNull
-    int image_id;
-    public  NespressoCapsule(int no_of_capsules, String name, int image_id)
+    public int getIntensity() {
+        return intensity;
+    }
+
+    public  NespressoCapsule(int no_of_capsules, String name, int image_id, int intensity)
     {
         this.no_of_capsules = no_of_capsules;
         this.name = name;
         this.image_id = image_id;
+        this.intensity = intensity;
     }
 
     @Override

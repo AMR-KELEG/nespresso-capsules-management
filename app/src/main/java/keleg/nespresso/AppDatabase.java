@@ -8,9 +8,10 @@ import android.arch.persistence.room.migration.Migration;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-@Database(entities = {NespressoCapsule.class}, version = 2)
+@Database(entities = {NespressoCapsule.class, Transaction.class}, version = 3)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract NespressoCapsuleDao capsuleDao();
+    public abstract TransactionDao transactionDao();
     private static volatile AppDatabase INSTANCE;
 
     static AppDatabase getDatabase(final Context context) {
@@ -19,7 +20,7 @@ public abstract class AppDatabase extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             AppDatabase.class, "capsules_database").allowMainThreadQueries()
-                            .addMigrations(MIGRATION_1_2)
+                            .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
                             .build();
                 }
             }
@@ -34,6 +35,19 @@ public abstract class AppDatabase extends RoomDatabase {
                     + " ADD COLUMN intensity INTEGER"
                     + " DEFAULT 0 NOT NULL"
             );
+        }
+    };
+
+    static final Migration MIGRATION_2_3 = new Migration(2, 3) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL(
+                    "CREATE TABLE transaction_table (transaction_id INTEGER NOT NULL," +
+                            "capsule_name TEXT NOT NULL," +
+                            "quantity INTEGER NOT NULL," +
+                            "PRIMARY KEY(transaction_id)," +
+                            "FOREIGN KEY(capsule_name) REFERENCES capsule_table(name)" +
+                            "ON DELETE CASCADE)");
         }
     };
 }
